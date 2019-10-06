@@ -5,11 +5,11 @@ ETCBASE="/etc/privoxy"
 LOGBASE="/var/log/privoxy"
 SOCKSBASE=9050
 LISTENBASE=3128
-N_INSTANCES=8
-for ((INSTANCE=1;INSTANCE<=8;INSTANCE++))
+N_INSTANCES=4
+for ((INSTANCE=1;INSTANCE<=4;INSTANCE++))
 do
-	
-	CONFDIR="$ETCBASE$INSTANCE"	
+
+	CONFDIR="$ETCBASE$INSTANCE"
 	LOGDIR="$LOGBASE$INSTANCE"
 	chown privoxy $LOGDIR
 	chgrp adm $LOGDIR
@@ -22,7 +22,7 @@ do
 	mkdir -p $LOGDIR
 	echo "forward-socks5t   /               127.0.0.1:$SOCKS_PORT ." > $CONF
 	echo "logdir $LOGDIR" >> $CONF
-	echo "listen-address  localhost:$LISTEN_PORT" >> $CONF
+	echo "listen-address  127.0.0.1:$LISTEN_PORT" >> $CONF
 	cat $ETCDIR/privoxy.config.default >> $CONF
 
 cat << EOF > $SERVICE_FILE
